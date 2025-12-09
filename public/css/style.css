@@ -1,0 +1,97 @@
+
+.body {
+  font-family: "Ubuntu", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
+.navbar {
+  height: 70px;
+}
+
+.fa-compass {
+  color: red;
+  font-size: 30px;
+}
+
+.nav-links {
+  color: black !important;
+}
+
+.f-info-links a {
+  text-decoration: none;
+  color: black;
+}
+
+.f-info-links a:hover {
+  color: rgb(98, 0, 255);
+  text-decoration: underline;
+}
+
+.f-info-links {
+  width: 100px;
+}
+
+.f-info-socials {
+  width: 100%;
+  font-size: 25px;
+}
+
+.f-info-copy {
+  width: 100%;
+}
+
+.f-info {
+  text-align: center;
+  display: flex;
+ background-color: #ebebeb;
+ height: 8rem;
+ flex-wrap: wrap;
+  justify-content: center;
+  align-items: space-evenly;
+}
+
+.card {
+  border: none !important;
+  margin-bottom: 2rem;
+  
+}
+
+.card-img-top {
+  border-radius: 1rem;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
+.card-text p{
+  font-size: 14px;
+}
+
+.listing-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: black;
+}
+
+/* edit - new */
+.btn.btn-primary {
+  background-color: #6200ff !important;
+  border-radius: 10px !important;
+}
