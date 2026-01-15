@@ -1,0 +1,45 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+  <header
+    class="bg-white shadow rounded px-4 py-2 mx-auto mt-4 mb-4"
+    style="max-width: 500px"
+  >
+    <h1 class="text-center fw-bold border-bottom pb-3">Login Form</h1>
+  </header>
+
+  <div class="d-flex justify-content-center mb-5">
+    <form action="/login" method="POST"
+      class="bg-white shadow rounded p-4 w-100"
+      style="max-width: 500px;">
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">User_Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          aria-describedby="emailHelp"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          name="password"
+        />
+      </div>
+      
+      <button type="submit" class="btn btn-primary mb-3 w-100">Submit</button>
+
+      <div class="text-center">Forgot <a href="">Username/Password?</a></div>
+      <div class="text-center">
+        Don't have an account? <a href="/signup">Sign up</a>
+      </div>
+    </form>
+  </div>
+</body>
