@@ -25,7 +25,7 @@ const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
 
 app.set("views", path.join(__dirname, "views"));
-app.set("views engine", "ejs");
+app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({extended: true}));
 app.engine("ejs", ejsMate);
@@ -128,7 +128,7 @@ app.use((err, req, res, next) => {
   // res.status(statusCode).send(message);
 })
 
-let port = 8080;
+let port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server is Running port ${port}`);
 })
