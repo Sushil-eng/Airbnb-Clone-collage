@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="row">
-        <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
+        <% if(locals.currUser && locals.currUser._id.equals(listing.owner._id)) { %>
           <div class="col-2 offset-2">
             <div class="mt-4 mb-4">
               <a class="btn btn-primary" href="/listings/<%= listing._id %>/edit">Edit Listing</a>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="row p-3 mb-auto">
-      <% if(currUser) { %>
+      <% if(locals.currUser) { %>
         <div class="col-8 offset-2 mb-md-3">
           <h4>Leave a Review</h4>
           <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">

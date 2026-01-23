@@ -31,7 +31,11 @@ app.use(express.urlencoded({extended: true}));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-const dbUrl = process.env.ATLASDB_URI;
+// const dbUrl = process.env.ATLASDB_URI;
+const dbUrl =
+  process.env.NODE_ENV === "production"
+    ? process.env.MONGO_URI_PROD
+    : process.env.ATLASDB_URI;
 
 main()
 .then(() => {
@@ -68,6 +72,7 @@ const sessionOption = {
     httpOnly: true,
   },
 };
+
 
 app.use(session(sessionOption));
 app.use(flash());
