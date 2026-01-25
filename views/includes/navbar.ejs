@@ -71,9 +71,10 @@
             <li class="nav-item">
               <a class="nav-link" href="/listings/new">Airbnb your home</a>
             </li>
-            <% if(!locals.currUser) { %>
+            <% if(!currUser) { %>
             <li class="nav-item">
               <a class="nav-link" href="/signup"><b>SignUp</b></a>
+              <%= currUser %>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/login"><b>LogIn</b></a>

@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="row">
-        <% if(locals.currUser && locals.currUser._id.equals(listing.owner._id)) { %>
+        <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
           <div class="col-2 offset-2">
             <div class="mt-4 mb-4">
               <a class="btn btn-primary" href="/listings/<%= listing._id %>/edit">Edit Listing</a>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="row p-3 mb-auto">
-      <% if(locals.currUser) { %>
+      <% if(currUser) { %>
         <div class="col-8 offset-2 mb-md-3">
           <h4>Leave a Review</h4>
           <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
@@ -79,7 +79,7 @@
 
             <div>
               <label for="form-label">Comments</label>
-              <textarea name="reviews[comment]" class="form-control" id="comment" cols="20" rows="20"
+              <textarea name="reviews[comment]" class="form-control" id="comment" cols="5" rows="10"
                 required></textarea>
               <div class="invalid-feedback">Please add some message</div>
             </div>
@@ -88,7 +88,7 @@
         </div>
         <% } %>
     </div>
-
+    <%= listing.review %>
     <% if (listing.reviews.length > 0) { %>
     <h4 class="mt-4 mb-4">Reviews</h4>
     <hr>
@@ -101,9 +101,10 @@
               <h6 class="fw-bold">
                 <%= review.author.username %>
               </h6>
-
+              <% if(review.rating > 0) { %>
               <p class="starability-result" data-rating="<%= review.rating %>">
               </p>
+              <% } %>
 
               <p class="mb-2">
                 <%= review.comment %>

@@ -35,7 +35,9 @@ app.use(express.static(path.join(__dirname, "/public")));
 const dbUrl =
   process.env.NODE_ENV === "production"
     ? process.env.MONGO_URI_PROD
-    : process.env.ATLASDB_URI;
+    : process.env.MONGO_URI_LOCAL;
+
+console.log("DB URL being used:", dbUrl); // temporary debug
 
 main()
 .then(() => {
