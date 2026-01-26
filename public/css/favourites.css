@@ -1,0 +1,35 @@
+.image-wrapper {
+  position: relative;
+}
+
+.image-wrapper img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 22px;
+  color: #ff385c;
+  background: white;
+  padding: 7px;
+  
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.heart-icon:hover {
+  transform: scale(1.1);
+}
+
+.heart-icon.active {
+  font-weight: 900;
+}
+
+.favourites-page .heart-icon {
+  display: none;
+}
+

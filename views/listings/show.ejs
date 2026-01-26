@@ -4,7 +4,7 @@
     <br />
     <div class="container">
       <div class="row">
-        <div class="col-10 offset-2">
+        <div class="col-10 offset-1">
           <h3>
             <%= listing.title %>
           </h3>
@@ -37,7 +37,7 @@
       </div>
       <div class="row">
         <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
-          <div class="col-2 offset-2">
+          <div class="col-2 offset-1">
             <div class="mt-4 mb-4">
               <a class="btn btn-primary" href="/listings/<%= listing._id %>/edit">Edit Listing</a>
             </div>
@@ -55,81 +55,149 @@
 
     <div class="row p-3 mb-auto">
       <% if(currUser) { %>
-        <div class="col-8 offset-2 mb-md-3">
+        <div class="col-4 offset-1 mb-md-3">
           <h4>Leave a Review</h4>
           <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
 
-             <label class="fw-bolder fs-5" for="rating">Rating</label>
-           <div>
-            <fieldset class="starability-slot">
-              <input type="radio" id="no-rate" class="input-no-rate" name="reviews[rating]" value="0" checked
-                aria-label="No rating." />
-              <input type="radio" id="first-rate1" name="reviews[rating]" value="1" />
-              <label for="first-rate1" title="Terrible">1 star</label>
-              <input type="radio" id="first-rate2" name="reviews[rating]" value="2" />
-              <label for="first-rate2" title="Not good">2 stars</label>
-              <input type="radio" id="first-rate3" name="reviews[rating]" value="3" />
-              <label for="first-rate3" title="Average">3 stars</label>
-              <input type="radio" id="first-rate4" name="reviews[rating]" value="4" />
-              <label for="first-rate4" title="Very good">4 stars</label>
-              <input type="radio" id="first-rate5" name="reviews[rating]" value="5" />
-              <label for="first-rate5" title="Amazing">5 stars</label>
-            </fieldset>
-          </div>
+            <label class="fw-bolder fs-5" for="rating">Rating</label>
+            <div>
+              <fieldset class="starability-slot" required>
+                <input type="radio" id="no-rate" class="input-no-rate" name="reviews[rating]" value="1" checked
+                  aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="reviews[rating]" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="reviews[rating]" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="reviews[rating]" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="reviews[rating]" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="reviews[rating]" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+            </div>
 
             <div>
               <label for="form-label">Comments</label>
-              <textarea name="reviews[comment]" class="form-control" id="comment" cols="5" rows="10"
-                required></textarea>
+              <textarea name="reviews[comment]" class="form-control" id="comment" cols="6" rows="4" required></textarea>
               <div class="invalid-feedback">Please add some message</div>
             </div>
-            <button type="submit" class="btn mt-3 btn-secondary"> Submit</button>
+            <button type="submit" class="btn mt-4 btn-secondary btn-lg w-50"> Submit</button>
           </form>
+        </div>
+        <div class="col-6">
+          <div class="card text-center">
+            <div class="card-header">
+              <b>Prices include all fees</b>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title mt-2">
+                <p class="card-text">&#8377; <a href="#"><%= listing.price.toLocaleString('en-IN') %></a>
+                    for 2 nights
+                </p>
+              </h5>
+              <p class="card-text">
+              <table class="table table-striped-columns">
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="mb-3 ms-2">
+                        <label class="form-label">Check-in</label>
+                        <input type="date" class="form-control">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="mb-3 ms-2">
+                        <label class="form-label">Check-out</label>
+                        <input type="date" class="form-control">
+                      </div>
+                    </td>
+                  </tr>                  
+                </tbody>
+               <tbody>
+                <tr>
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Guests
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Adult</a>
+                        <p class="ms-2"> Age 13+
+                          <input type="number" max="2" min="0" style="width: 40px;">
+                        </p>
+                        
+                      </li>
+                        <li><a class="dropdown-item" href="#">Children</a>
+                        <p class="ms-2">Age 2-12
+                          <input type="number" max="2" min="0" style="width: 40px;">
+                        </p>
+                        
+                      </li>
+                        <li><a class="dropdown-item" href="#">Infants</a>
+                        <p class="ms-2">Age 0-2 &nbsp;
+                           <input type="number" max="1" min="0" style="width: 40px;">
+                        </p>
+                       
+                      </li>
+                      </ul>
+                    </div>
+                  </tr>
+               </tbody>
+              </table>
+              </p>
+              <a href="#" class="btn btn-primary btn-lg w-50 mb-3 " >Reserve</a>
+            </div>
+            <div class="card-footer text-body-secondary">
+              You won't be charged yet
+            </div>
+          </div>
         </div>
         <% } %>
     </div>
     <%= listing.review %>
-    <% if (listing.reviews.length > 0) { %>
-    <h4 class="mt-4 mb-4">Reviews</h4>
-    <hr>
-    <div class="row g-3">
-      <% for (let review of listing.reviews) { %>
-        <div class="col-12 col-md-4">
-          <div class="card shadow-sm border-0 p-3 h-100">
-            <div class="card-body">
+      <% if (listing.reviews.length> 0) { %>
+        <h4 class="mt-4 mb-4">Reviews</h4>
+        <hr>
+        <div class="row g-3">
+          <% for (let review of listing.reviews) { %>
+            <div class="col-12 col-md-4">
+              <div class="card shadow-sm border-0 p-3 h-100">
+                <div class="card-body">
 
-              <h6 class="fw-bold">
-                <%= review.author.username %>
-              </h6>
-              <% if(review.rating > 0) { %>
-              <p class="starability-result" data-rating="<%= review.rating %>">
-              </p>
-              <% } %>
+                  <h6 class="fw-bold">
+                    <%= review.author.username %>
+                  </h6>
+                  <% if(review.rating> 0) { %>
+                    <p class="starability-result" data-rating="<%= review.rating %>">
+                    </p>
+                    <% } %>
 
-              <p class="mb-2">
-                <%= review.comment %>
-              </p>
+                      <p class="mb-2">
+                        <%= review.comment %>
+                      </p>
 
-              <small class="text-muted">
-                <%= new Date(review.createdAt).toLocaleDateString() %>
-              </small>
-              <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                <button class="btn mt-2 btn-dark btn-sm">Delete</button>
-              </form>
+                      <small class="text-muted">
+                        <%= new Date(review.createdAt).toLocaleDateString() %>
+                      </small>
+                      <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                        method="post">
+                        <button class="btn mt-2 btn-dark btn-sm">Delete</button>
+                      </form>
+                </div>
+              </div>
             </div>
-          </div>
+            <% } %>
         </div>
         <% } %>
-    </div>
-    <% } %>
 
-    <div class="row">
-      <div class="col-8 offset-2 mt-5 mb-5 me-lg-2">
-        <div class="fw-bolder mb-3">You are here</div>
-        <div id="map"></div>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-8 offset-1 mt-5 mb-5 me-lg-2">
+              <div class="fw-bolder mb-3">You are here</div>
+              <div id="map"></div>
+            </div>
+          </div>
 
-    
+
   </body>
   <script src="/js/map.js"></script>

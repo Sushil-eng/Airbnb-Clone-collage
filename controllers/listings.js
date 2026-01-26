@@ -23,7 +23,7 @@ module.exports.showListing = (async (req, res) => {
       req.flash("error", "Listing is not exist");
       return res.redirect("/listings");
     }
-    console.log("Listing", listing), 
+    
     res.render("listings/show.ejs", { listing });
   }
 );
@@ -32,7 +32,6 @@ module.exports.showListing = (async (req, res) => {
 module.exports.createListing = async (req, res, next) => {
     let url = req.file.path;
     let filename = req.file.filename;
-    console.log("url : ", url, "filename : ", filename);
     let result = listingSchema.validate(req.body);
     if (result.error) {
       let errMeg = error.details.map((el) => el.message).join(",");
@@ -78,7 +77,7 @@ module.exports.createListing = async (req, res, next) => {
   module.exports.deleteListing = async (req, res) => {
     let { id } = req.params;
     let deleteListing = await Listing.findByIdAndDelete(id);
-    console.log(deleteListing);
+   
     req.flash("success", "Data is Deleted");
 
     res.redirect("/listings");

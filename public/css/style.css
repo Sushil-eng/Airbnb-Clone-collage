@@ -102,4 +102,10 @@
   width: 100vh;
   border: 2px solid black;
 }
+
+.listing-link {
+  text-decoration: none;
+  color: inherit;
+}
+
    

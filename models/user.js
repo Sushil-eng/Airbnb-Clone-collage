@@ -20,6 +20,12 @@ const userSchema = new Schema({
         required: true,  
         
     },
+    favourites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Listing"   // your property model
+    }
+  ]
 
 
 });
