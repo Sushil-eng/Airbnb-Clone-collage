@@ -106,10 +106,10 @@ app.use((req, res, next) => {
 //   let registeredUser = await User.register(fakeUser, "helloworld");
 //   res.send(registeredUser);
 // });
-
+app.use("/", listingRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-app.use("/", userRouter);
+// app.use("/", userRouter);
 app.use("/favourite", favouriteRouter);
 
 
