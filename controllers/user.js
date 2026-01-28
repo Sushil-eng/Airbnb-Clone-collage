@@ -44,3 +44,29 @@ module.exports.logout = (req, res, next) => {
         res.redirect("/listings");
     })
 }
+
+module.exports.showProfileForm = async(req, res) => {
+  const userId = req.user._id;
+  const user = await User.findById(userId);
+  res.render("users/show.ejs", { user });
+}
+
+
+module.exports.editProfileForm = async(req, res) => {
+  const userId = req.user._id;
+  const user = await User.findById(userId);
+  res.render("users/editProfile.ejs", { user });
+}
+
+module.exports.updateProfileForm = async(req, res) => {
+   const { user } = req.body;
+   console.log("user", user);
+
+  await User.findByIdAndUpdate(req.user._id, user, {
+    runValidators: true,
+    new: true
+  });
+
+  req.flash("success", "Profile updated successfully");
+  res.redirect("/listings");
+}

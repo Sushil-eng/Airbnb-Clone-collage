@@ -1,0 +1,43 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <div class="container mb-5">
+      <div class="row">
+        <div class="col-10 offset-1">
+            <% for (let booking of bookings) { %>
+          <h3>
+            <%= booking.listing.title %>
+          </h3>
+          <div class="card w-50 mt-2">
+            <img src="<%= booking.listing.image.url %>" class="card-img-top" alt="listing image"
+              style="height: 20rem; width: 40%;" />
+          </div>
+          <div class="mt-4 mb-3">
+            <div class="card text-dark rounded-1 bg-light mb-3" style="max-width: 50%;">
+              <div class="card-body p-4">
+                <h5 class="card-title">
+                </h5>
+                 <p class="card-text">&#8377; <%= booking.listing.price.toLocaleString('en-IN') %>
+                </p>
+                <p class="card-text">
+                  <%= booking.listing.location %> , <%= booking.listing.country %>
+                </p>
+                <p class="card-text">
+                    <b>Booking Dates:</b> &nbsp;
+                    <%= booking.checkIn.toDateString() %>&nbsp; to &nbsp; <%= booking.checkOut.toDateString() %>
+                </p>
+                <p class="card-text">
+                    <form action="/booking/<%= booking._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Cancle Reservation</button>
+              </form>
+                </p>
+
+              </div>
+              
+            </div>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+</body>

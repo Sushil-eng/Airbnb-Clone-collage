@@ -44,9 +44,13 @@
           </div>
           <div class="col-2">
             <div class="mt-4 mb-4">
-              <form action="/listings/<%= listing._id %>?_method=DELETE" method="post">
+             <% if (hasActiveBooking) {%>
+              <button class="btn btn-danger" disabled>Delete Listing</button>
+              <%} else {%>
+                 <form action="/listings/<%= listing._id %>?_method=DELETE" method="post">
                 <button class="btn btn-danger">Delete Listing</button>
               </form>
+                <% } %>
             </div>
           </div>
           <% } %>
@@ -92,29 +96,37 @@
             </div>
             <div class="card-body">
               <h5 class="card-title mt-2">
-                <p class="card-text">&#8377; <a href="#"><%= listing.price.toLocaleString('en-IN') %></a>
-                    for 2 nights
+                <p class="card-text">&#8377; <a href="#">
+                    <%= listing.price.toLocaleString('en-IN') %>
+                  </a>
+                  for 2 nights
                 </p>
               </h5>
               <p class="card-text">
-              <table class="table table-striped-columns">
-                <tbody>
-                  <tr>
-                    <td>
-                      <div class="mb-3 ms-2">
-                        <label class="form-label">Check-in</label>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="mb-3 ms-2">
-                        <label class="form-label">Check-out</label>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>                  
-                </tbody>
-               <tbody>
+              <form action="/booking/<%= listing._id %>/reserve" method="POST">
+                <table class="table table-striped-columns">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="mb-3 ms-2">
+                          <label class="form-label">Check-in</label>
+                          <input type="date" name="checkIn" class="form-control">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="mb-3 ms-2">
+                          <label class="form-label">Check-out</label>
+                          <input type="date" name="checkOut" class="form-control">
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  </table>
+                  <button class="btn btn-danger w-100">
+                    Reserve
+                  </button>
+              </form>
+              <!-- <tbody>
                 <tr>
                     <div class="dropdown">
                       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -143,10 +155,10 @@
                       </ul>
                     </div>
                   </tr>
-               </tbody>
+               </tbody> -->
               </table>
               </p>
-              <a href="#" class="btn btn-primary btn-lg w-50 mb-3 " >Reserve</a>
+
             </div>
             <div class="card-footer text-body-secondary">
               You won't be charged yet

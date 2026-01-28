@@ -1,0 +1,46 @@
+<% layout("/layouts/boilerplate") %>
+
+<body >
+
+  <!-- Header -->
+  <header class="bg-white shadow rounded px-4 py-2 mx-auto mt-4 mb-4" style="max-width: 500px;">
+            <h1 class="text-center fw-bold border-bottom pb-3">
+                Edit Your Profile
+            </h1>
+        </header>
+
+  <!-- Profile Card -->
+  <main class="w-100 d-flex justify-content-center mb-5">
+    <div class="bg-white shadow rounded p-4 w-100" style="max-width: 500px;">
+
+      <div class="mb-3">
+        <p class="fw-bold mb-1">User Name</p>
+        <p class="text-muted"><%= user.username %></p>
+      </div>
+
+      <div class="mb-3">
+        <p class="fw-bold mb-1">First Name</p>
+        <p class="text-muted"><%= user.firstName %></p>
+      </div>
+
+      <div class="mb-3">
+        <p class="fw-bold mb-1">Last Name</p>
+        <p class="text-muted"><%= user.lastName %></p>
+      </div>
+
+      <div class="mb-4">
+        <p class="fw-bold mb-1">Email</p>
+        <p class="text-muted"><%= user.email %></p>
+      </div>
+
+      <!-- Update button -->
+      <form action="/profile/edit" method="get">
+        <button type="submit" class="btn btn-primary w-100 fw-bold">
+          Update Profile
+        </button>
+      </form>
+
+    </div>
+  </main>
+
+</body>

@@ -8,6 +8,8 @@ const { saveRedirectUrl } = require("../middleware.js");
 const userController = require("../controllers/user.js");
 const user = require("../models/user.js");
 
+const { isLoggedIn, validateListing, isOwner } = require("../middleware.js");
+
 router
   .route("/signup")
   .get(userController.renderSignupForm)
@@ -26,7 +28,20 @@ router
   }), userController.login
 );
 
+router
+  .route("/show")
+  .get(isLoggedIn, userController.showProfileForm)
+
+router
+  .route("/edit")
+  .get(isLoggedIn, userController.editProfileForm)
 
 router.get("/logout", userController.logout);
+
+
+router
+  .route("/update")
+  .put(isLoggedIn, userController.updateProfileForm)
+
 
 module.exports = router;

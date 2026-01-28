@@ -1,0 +1,51 @@
+<% layout("/layouts/boilerplate") %>
+
+
+    <body class="bg-light min-vh-100">
+
+        <!-- Header -->
+        <header class="bg-white shadow rounded px-4 py-2 mx-auto mt-4 mb-4" style="max-width: 500px;">
+            <h1 class="text-center fw-bold border-bottom pb-3">
+                Edit Your Profile
+            </h1>
+        </header>
+
+        <!-- Form -->
+        <main class="d-flex justify-content-center mb-5">
+            <form action="/profile/update?_method=PUT" method="post" class="bg-white shadow rounded p-4 w-100" style="max-width: 500px;">
+
+                <!-- username -->
+                <div class="mb-3">
+                    <label for="firstName" class="form-label fw-bold">User Name</label>
+                    <input type="text" class="form-control" name="user[username]" id="username" value="<%= user.username %>" placeholder="User_Name">
+                </div>
+
+                <!-- First Name -->
+                <div class="mb-3">
+                    <label for="firstName" class="form-label fw-bold">First Name</label>
+                    <input type="text" class="form-control" name="user[firstName]" id="firstName" value="<%= user.firstName%>" placeholder="First Name">
+                </div>
+
+                <!-- Last Name -->
+                <div class="mb-3">
+                    <label for="lastName" class="form-label fw-bold">Last Name</label>
+                    <input type="text" class="form-control" name="user[lastName]" id="lastName" value="<%= user.lastName %>" placeholder="Last Name">
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-bold">Email</label>
+                    <input type="email" class="form-control" value="<%= user.email %>" name="user[email]" id="email" placeholder="abc@gmail.com"
+                        required>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary w-100 fw-bold">
+                    Update Profile
+                </button>
+
+            </form>
+        </main>
+    </body>
+
+    </html>
