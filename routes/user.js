@@ -38,10 +38,12 @@ router
 
 router.get("/logout", userController.logout);
 
+router.get("/", userController.frontPage);
 
 router
   .route("/update")
   .put(isLoggedIn, userController.updateProfileForm)
+
 
 
 module.exports = router;

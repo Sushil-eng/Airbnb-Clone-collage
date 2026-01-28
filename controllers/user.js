@@ -70,3 +70,7 @@ module.exports.updateProfileForm = async(req, res) => {
   req.flash("success", "Profile updated successfully");
   res.redirect("/listings");
 }
+
+module.exports.frontPage = async(req, res) => {
+  res.redirect("/listings");
+}
