@@ -1,44 +1,57 @@
 <% layout("/layouts/boilerplate") %>
 
-<body >
+<body class="bg-light min-vh-100">
 
-  <!-- Header -->
-  <header class="bg-white shadow rounded px-4 py-2 mx-auto mt-4 mb-4" style="max-width: 500px;">
-            <h1 class="text-center fw-bold border-bottom pb-3">
-                Edit Your Profile
-            </h1>
-        </header>
-
-  <!-- Profile Card -->
-  <main class="w-100 d-flex justify-content-center mb-5">
-    <div class="bg-white shadow rounded p-4 w-100" style="max-width: 500px;">
-
-      <div class="mb-3">
-        <p class="fw-bold mb-1">User Name</p>
-        <p class="text-muted"><%= user.username %></p>
+  <main class="container d-flex justify-content-center align-items-start mt-5 mb-5 ps-3 pe-3">
+    <div class="bg-white shadow-lg border-0 rounded-4 p-4 p-md-5 w-100" style="max-width: 600px;">
+      
+      <!-- Profile Header -->
+      <div class="d-flex flex-column align-items-center mb-4 pb-4 border-bottom">
+        <div class="position-relative mb-3">
+          <% if(user.avatar && user.avatar.url) { %>
+            <img src="<%= user.avatar.url %>" alt="Profile Picture" class="rounded-circle shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+          <% } else { %>
+            <div class="bg-dark rounded-circle shadow-sm d-flex align-items-center justify-content-center text-white" style="width: 120px; height: 120px; font-size: 40px;">
+              <i class="fa-solid fa-user"></i>
+            </div>
+          <% } %>
+        </div>
+        <h2 class="fw-bold mb-1"><%= user.firstName %> <%= user.lastName %></h2>
+        <p class="text-muted mb-0">@<%= user.username %></p>
       </div>
 
-      <div class="mb-3">
-        <p class="fw-bold mb-1">First Name</p>
-        <p class="text-muted"><%= user.firstName %></p>
+      <!-- Profile Details -->
+      <div class="mb-5">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fa-solid fa-envelope text-muted fs-5 me-3" style="width: 20px; text-align: center;"></i>
+          <div>
+            <p class="text-muted mb-0" style="font-size: 13px; text-transform: uppercase; font-weight: 600;">Email Address</p>
+            <p class="text-dark fw-semibold mb-0"><%= user.email %></p>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center mb-3">
+          <i class="fa-solid fa-calendar-check text-muted fs-5 me-3" style="width: 20px; text-align: center;"></i>
+          <div>
+            <p class="text-muted mb-0" style="font-size: 13px; text-transform: uppercase; font-weight: 600;">Member Status</p>
+            <p class="text-dark fw-semibold mb-0">Verified User</p>
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        <p class="fw-bold mb-1">Last Name</p>
-        <p class="text-muted"><%= user.lastName %></p>
+      <!-- Actions -->
+      <div class="d-flex gap-3">
+        <form action="/profile/edit" method="get" class="w-100 m-0">
+          <button type="submit" class="btn btn-outline-dark rounded-pill py-3 fw-bold w-100">
+            Edit Profile
+          </button>
+        </form>
+        <form action="/logout" method="get" class="w-100 m-0">
+          <button type="submit" class="btn btn-outline-danger rounded-pill py-3 fw-bold w-100">
+            Log Out
+          </button>
+        </form>
       </div>
-
-      <div class="mb-4">
-        <p class="fw-bold mb-1">Email</p>
-        <p class="text-muted"><%= user.email %></p>
-      </div>
-
-      <!-- Update button -->
-      <form action="/profile/edit" method="get">
-        <button type="submit" class="btn btn-primary w-100 fw-bold">
-          Update Profile
-        </button>
-      </form>
 
     </div>
   </main>

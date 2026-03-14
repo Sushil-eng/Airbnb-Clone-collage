@@ -32,16 +32,43 @@ module.exports.createBooking = async (req, res) => {
     return res.redirect(`/listings/${listingId}`);
   }
 
-  await Booking.create({
-    user: userId,
-    listing: listingId,
+  // Render a mock payment page to collect credit card info visually
+  res.render("booking/payment.ejs", {
+    listing,
     checkIn,
     checkOut,
+    nights,
     totalPrice
   });
+};
 
-  req.flash("success", "Room reserved successfully 🎉");
-  res.redirect(`/listings/${listingId}`);
+module.exports.finalizeBooking = async (req, res) => {
+  const { checkIn, checkOut, totalPrice } = req.body;
+  const listingId = req.params.id;
+  const userId = req.user._id;
+
+  // Check if this booking hasn't already been created to prevent duplicates
+  const existingBooking = await Booking.findOne({ 
+    listing: listingId, 
+    user: userId, 
+    checkIn: new Date(checkIn), 
+    checkOut: new Date(checkOut) 
+  });
+
+  if (!existingBooking) {
+    await Booking.create({
+      user: userId,
+      listing: listingId,
+      checkIn: new Date(checkIn),
+      checkOut: new Date(checkOut),
+      totalPrice: Number(totalPrice)
+    });
+    req.flash("success", "Payment successful! Room reserved 🎉");
+  } else {
+    req.flash("success", "Room already reserved successfully 🎉");
+  }
+
+  return res.redirect(`/booking/show`);
 };
 
 module.exports.showbookings = async (req, res) => {

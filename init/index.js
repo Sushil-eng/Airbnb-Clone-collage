@@ -17,7 +17,12 @@ async function main() {
 
 const initDB = async () =>{
   await Listing.deleteMany({});
-  initData.data = initData.data.map((obj) => ({...obj, owner: "693e9d277ef2f27e04b80716"}));
+  const categories = ['Trending', 'Rooms', 'Iconic Cities', 'Mountains', 'Castles', 'Pools', 'Camping', 'Farms', 'Arctic', 'Domes', 'Boats'];
+  initData.data = initData.data.map((obj) => ({
+    ...obj, 
+    owner: "693e9d277ef2f27e04b80716",
+    category: categories[Math.floor(Math.random() * categories.length)]
+  }));
   await Listing.insertMany(initData.data);
   console.log("Data is Inserted Successfully Thanks For insereting @")
 } 

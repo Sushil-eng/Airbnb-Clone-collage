@@ -1,51 +1,169 @@
 <% layout("/layouts/boilerplate") %>
 
+<body class="bg-light min-vh-100">
 
-    <body class="bg-light min-vh-100">
+  <main class="container d-flex justify-content-center align-items-start mt-5 mb-5 ps-3 pe-3">
+    <form action="/profile/update?_method=PUT" method="post" enctype="multipart/form-data" class="bg-white shadow-lg border-0 rounded-4 p-4 p-md-5 w-100 needs-validation" style="max-width: 600px;" novalidate>
+      
+      <h2 class="fw-bold mb-4 pb-3 border-bottom text-center">Edit your profile</h2>
+      
+      <!-- Cropper.js Dependencies -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
-        <!-- Header -->
-        <header class="bg-white shadow rounded px-4 py-2 mx-auto mt-4 mb-4" style="max-width: 500px;">
-            <h1 class="text-center fw-bold border-bottom pb-3">
-                Edit Your Profile
-            </h1>
-        </header>
+      <!-- Current Avatar Preview (Clickable) -->
+      <div class="d-flex flex-column align-items-center mb-4">
+        <div class="position-relative profile-img-container" style="cursor: pointer; width: 120px; height: 120px; border-radius: 50%; overflow: hidden;" onclick="document.getElementById('avatar').click()">
+          <% if(user.avatar && user.avatar.url) { %>
+            <img id="profilePreview" src="<%= user.avatar.url %>" alt="Current Avatar" class="w-100 h-100 shadow-sm" style="object-fit: cover;">
+          <% } else { %>
+            <div id="profilePreview" class="bg-secondary w-100 h-100 d-flex align-items-center justify-content-center text-white shadow-sm" style="font-size: 40px;">
+              <i class="fa-solid fa-user"></i>
+            </div>
+          <% } %>
+          
+          <!-- Hover Overlay -->
+          <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 text-white fw-semibold" style="opacity: 0; transition: opacity 0.2s;">
+            <i class="fa-solid fa-camera fs-4"></i>
+          </div>
+        </div>
+        
+        <input type="file" class="d-none" name="avatar" id="avatar" accept="image/*">
+      </div>
 
-        <!-- Form -->
-        <main class="d-flex justify-content-center mb-5">
-            <form action="/profile/update?_method=PUT" method="post" class="bg-white shadow rounded p-4 w-100" style="max-width: 500px;">
+      <div class="mb-4">
+        <label for="username" class="form-label fw-semibold">Username</label>
+        <input type="text" class="form-control rounded-pill py-2 px-4 shadow-none border-1" name="user[username]" id="username" value="<%= user.username %>" required>
+        <div class="invalid-feedback">Username is required</div>
+      </div>
 
-                <!-- username -->
-                <div class="mb-3">
-                    <label for="firstName" class="form-label fw-bold">User Name</label>
-                    <input type="text" class="form-control" name="user[username]" id="username" value="<%= user.username %>" placeholder="User_Name">
-                </div>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label for="firstName" class="form-label fw-semibold">First Name</label>
+          <input type="text" class="form-control rounded-pill py-2 px-4 shadow-none border-1" name="user[firstName]" id="firstName" value="<%= user.firstName%>" required>
+          <div class="invalid-feedback">First name is required</div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label for="lastName" class="form-label fw-semibold">Last Name</label>
+          <input type="text" class="form-control rounded-pill py-2 px-4 shadow-none border-1" name="user[lastName]" id="lastName" value="<%= user.lastName %>" required>
+          <div class="invalid-feedback">Last name is required</div>
+        </div>
+      </div>
 
-                <!-- First Name -->
-                <div class="mb-3">
-                    <label for="firstName" class="form-label fw-bold">First Name</label>
-                    <input type="text" class="form-control" name="user[firstName]" id="firstName" value="<%= user.firstName%>" placeholder="First Name">
-                </div>
+      <div class="mb-5">
+        <label for="email" class="form-label fw-semibold">Email address</label>
+        <input type="email" class="form-control rounded-pill py-2 px-4 shadow-none border-1" value="<%= user.email %>" name="user[email]" id="email" required>
+        <div class="invalid-feedback">A valid email is required</div>
+      </div>
 
-                <!-- Last Name -->
-                <div class="mb-3">
-                    <label for="lastName" class="form-label fw-bold">Last Name</label>
-                    <input type="text" class="form-control" name="user[lastName]" id="lastName" value="<%= user.lastName %>" placeholder="Last Name">
-                </div>
+      <div class="d-flex gap-3 mt-4">
+        <a href="/profile/show" class="btn btn-outline-dark w-100 rounded-pill py-3 fw-bold">Cancel</a>
+        <button type="submit" class="btn btn-primary w-100 rounded-pill py-3 fw-bold">Save Changes</button>
+      </div>
 
-                <!-- Email -->
-                <div class="mb-3">
-                    <label for="email" class="form-label fw-bold">Email</label>
-                    <input type="email" class="form-control" value="<%= user.email %>" name="user[email]" id="email" placeholder="abc@gmail.com"
-                        required>
-                </div>
+    </form>
+  </main>
 
-                <!-- Submit -->
-                <button type="submit" class="btn btn-primary w-100 fw-bold">
-                    Update Profile
-                </button>
+  <!-- Cropper Modal -->
+  <div class="modal fade" id="cropperModal" tabindex="-1" aria-labelledby="cropperModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold" id="cropperModalLabel">Crop Profile Picture</h5>
+          <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="img-container" style="max-height: 400px; overflow: hidden; background: #e9ecef; border-radius: 8px;">
+            <img id="imageToCrop" src="" alt="Picture" class="w-100">
+          </div>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-outline-dark rounded-pill fw-bold" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary rounded-pill fw-bold" id="cropButton">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            </form>
-        </main>
-    </body>
+  <style>
+    .profile-img-container:hover .overlay { opacity: 1 !important; }
+  </style>
 
-    </html>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const avatarInput = document.getElementById('avatar');
+      const cropperModalElement = document.getElementById('cropperModal');
+      const cropperModal = new bootstrap.Modal(cropperModalElement);
+      const imageToCrop = document.getElementById('imageToCrop');
+      const cropButton = document.getElementById('cropButton');
+      let cropper;
+
+      // When file is selected, read it and open modal
+      avatarInput.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+          const file = files[0];
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            imageToCrop.src = event.target.result;
+            cropperModal.show();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Initialize Cropper JS when Modal is fully shown
+      cropperModalElement.addEventListener('shown.bs.modal', function () {
+        cropper = new Cropper(imageToCrop, {
+          aspectRatio: 1, // Square crop for circle avatar
+          viewMode: 1,
+          autoCropArea: 1,
+        });
+      });
+
+      // Destroy Cropper JS when Modal is hidden
+      cropperModalElement.addEventListener('hidden.bs.modal', function () {
+        if(cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
+      });
+
+      // Handle Crop Application
+      cropButton.addEventListener('click', function() {
+        if (!cropper) return;
+
+        // Get canvas data
+        const canvas = cropper.getCroppedCanvas({
+          width: 500,
+          height: 500,
+        });
+
+        // Convert canvas to blob and set it to the file input
+        canvas.toBlob(function(blob) {
+          // Update the preview image on the form
+          const profilePreview = document.getElementById('profilePreview');
+          if(profilePreview.tagName === 'IMG') {
+            profilePreview.src = canvas.toDataURL('image/jpeg');
+          } else {
+            // If it was the placeholder div, replace it with an IMG
+            const newImg = document.createElement('img');
+            newImg.id = "profilePreview";
+            newImg.src = canvas.toDataURL('image/jpeg');
+            newImg.className = "w-100 h-100 shadow-sm";
+            newImg.style.objectFit = "cover";
+            profilePreview.parentNode.replaceChild(newImg, profilePreview);
+          }
+
+          // Create a new File and inject into the hidden file input
+          const newFile = new File([blob], "avatar_cropped.jpg", { type: "image/jpeg", lastModified: new Date().getTime() });
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(newFile);
+          avatarInput.files = dataTransfer.files;
+
+          cropperModal.hide();
+        }, 'image/jpeg');
+      });
+    });
+  </script>
+</body>

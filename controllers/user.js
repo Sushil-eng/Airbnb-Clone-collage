@@ -8,6 +8,12 @@ module.exports.signupForm = async (req, res) => {
     try {
       let { username, firstName, lastName, email, password } = req.body;
       const newUser = new User({ username, firstName, lastName, email });
+      if (req.file) {
+        newUser.avatar = {
+          url: req.file.path,
+          filename: req.file.filename
+        };
+      }
       const registeredUser = await User.register(newUser, password);
       console.log(registeredUser);
        req.login( registeredUser, (err) => {
@@ -62,10 +68,18 @@ module.exports.updateProfileForm = async(req, res) => {
    const { user } = req.body;
    console.log("user", user);
 
-  await User.findByIdAndUpdate(req.user._id, user, {
-    runValidators: true,
-    new: true
-  });
+   let updatedUser = await User.findByIdAndUpdate(req.user._id, user, {
+     runValidators: true,
+     new: true
+   });
+
+   if (typeof req.file !== "undefined") {
+     updatedUser.avatar = {
+       url: req.file.path,
+       filename: req.file.filename
+     };
+     await updatedUser.save();
+   }
 
   req.flash("success", "Profile updated successfully");
   res.redirect("/listings");

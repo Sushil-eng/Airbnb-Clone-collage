@@ -3,8 +3,24 @@ const { listingSchema } = require("../schema.js");
 const Booking = require("../models/booking.js");
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index.ejs", { allListings });
+  const { q, category } = req.query;
+  let filter = {};
+  
+  if (q) {
+    const searchRegex = new RegExp(q, 'i');
+    filter.$or = [
+      { title: searchRegex },
+      { location: searchRegex },
+      { country: searchRegex }
+    ];
+  }
+  
+  if (category) {
+    filter.category = category;
+  }
+
+  const allListings = await Listing.find(filter);
+  res.render("listings/index.ejs", { allListings, searchQuery: q || "", currentCategory: category || "" });
 };
 
 module.exports.renderNewForm = async (req, res) => {
@@ -35,7 +51,7 @@ module.exports.createListing = async (req, res, next) => {
   let filename = req.file.filename;
   let result = listingSchema.validate(req.body);
   if (result.error) {
-    let errMeg = error.details.map((el) => el.message).join(",");
+    let errMeg = result.error.details.map((el) => el.message).join(",");
     throw new ExpressError(400, errMeg);
   }
   const newListing = new Listing(req.body.listing);
@@ -56,7 +72,7 @@ module.exports.renderEditForm = async (req, res) => {
   }
 
   let originalImageurl = listing.image.url;
-  originalImageurl = originalImageurl.replace("/upload", "/upload/w_30 0");
+  originalImageurl = originalImageurl.replace("/upload", "/upload/w_250");
   req.flash("success", "Data is Updated");
   res.render("listings/edit.ejs", { listing, originalImageurl });
 };

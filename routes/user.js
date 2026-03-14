@@ -6,14 +6,17 @@ const passport = require("passport");
 const { saveRedirectUrl } = require("../middleware.js");
 
 const userController = require("../controllers/user.js");
-const user = require("../models/user.js");
 
 const { isLoggedIn, validateListing, isOwner } = require("../middleware.js");
+const multer = require('multer');
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 
 router
   .route("/signup")
   .get(userController.renderSignupForm)
   .post(
+  upload.single('avatar'),
   wrapAsync(userController.signupForm)
 );
 
@@ -42,7 +45,7 @@ router.get("/", userController.frontPage);
 
 router
   .route("/update")
-  .put(isLoggedIn, userController.updateProfileForm)
+  .put(isLoggedIn, upload.single('avatar'), userController.updateProfileForm)
 
 
 

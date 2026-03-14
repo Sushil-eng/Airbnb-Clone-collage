@@ -14,6 +14,13 @@ router
     wrapAsync(bookingController.createBooking)
   );
 
+router
+  .route("/:id/finalize")
+  .post(
+    isLoggedIn,
+    wrapAsync(bookingController.finalizeBooking)
+  );
+
   router
   .route("/show")
   .get(
