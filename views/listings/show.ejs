@@ -66,50 +66,57 @@
     <!-- Right Column: Booking Card -->
     <div class="col-lg-4">
       <% if(currUser) { %>
-        <div class="card shadow-lg border-0 rounded-4 sticky-top" style="top: 100px; padding: 24px;">
-          <div class="card-body p-0">
-            <h4 class="fw-bold mb-4">
-              &#8377; <%= listing.price.toLocaleString('en-IN') %> <span class="fs-6 fw-normal text-muted">night</span>
-            </h4>
-            
-            <form action="/booking/<%= listing._id %>/reserve" method="POST">
-              <div class="border rounded-4 overflow-hidden mb-3">
-                <div class="d-flex">
-                  <div class="p-2 border-end border-bottom w-50">
-                    <label class="form-label mb-0" style="font-size: 10px; font-weight: 800; text-transform: uppercase;">Check-in</label>
-                    <input type="date" name="checkIn" class="form-control border-0 p-0 shadow-none fw-semibold bg-transparent" required>
-                  </div>
-                  <div class="p-2 border-bottom w-50">
-                    <label class="form-label mb-0" style="font-size: 10px; font-weight: 800; text-transform: uppercase;">Check-out</label>
-                    <input type="date" name="checkOut" class="form-control border-0 p-0 shadow-none fw-semibold bg-transparent" required>
-                  </div>
+        <div class="show-booking-card sticky-top" style="top: 100px;">
+          <h4 class="fw-bold mb-1">
+            &#8377; <%= listing.price.toLocaleString('en-IN') %> <span class="fs-6 fw-normal" style="color:var(--air-muted)">/ night</span>
+          </h4>
+          <div class="d-flex align-items-center gap-1 mb-4" style="font-size:13.5px; color:var(--air-dark); font-weight:600;">
+            <i class="fa-solid fa-star" style="font-size:11px;"></i> 4.9
+            <span style="color:var(--air-muted); font-weight:400;">· <%= listing.reviews.length %> reviews</span>
+          </div>
+
+          <form action="/booking/<%= listing._id %>/reserve" method="POST">
+            <div style="border:1.5px solid var(--air-border); border-radius:var(--r-md); overflow:hidden; margin-bottom:14px;">
+              <div class="d-flex">
+                <div class="p-3 w-50" style="border-right:1px solid var(--air-border); border-bottom:1px solid var(--air-border);">
+                  <label class="d-block mb-1" style="font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--air-dark);">Check-in</label>
+                  <input type="date" name="checkIn" class="form-control border-0 p-0 shadow-none fw-semibold bg-transparent" required style="font-size:14px;">
+                </div>
+                <div class="p-3 w-50" style="border-bottom:1px solid var(--air-border);">
+                  <label class="d-block mb-1" style="font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--air-dark);">Check-out</label>
+                  <input type="date" name="checkOut" class="form-control border-0 p-0 shadow-none fw-semibold bg-transparent" required style="font-size:14px;">
                 </div>
               </div>
-              <button class="btn btn-primary w-100 rounded-pill py-3 fw-bold fs-5 mb-3">Reserve</button>
-              <div class="text-center text-muted" style="font-size: 14px;">You won't be charged yet</div>
-              
-              <div class="d-flex justify-content-between mt-4 mb-2">
-                <span class="text-decoration-underline">&#8377; <%= listing.price.toLocaleString('en-IN') %> x 2 nights</span>
-                <span>&#8377; <%= (listing.price * 2).toLocaleString('en-IN') %></span>
-              </div>
-              <div class="d-flex justify-content-between mb-3 border-bottom pb-4">
-                <span class="text-decoration-underline">Cleaning fee</span>
-                <span>&#8377; 1,500</span>
-              </div>
-              <div class="d-flex justify-content-between fw-bold fs-5 pt-2">
-                <span>Total</span>
-                <span>&#8377; <%= ((listing.price * 2) + 1500).toLocaleString('en-IN') %></span>
-              </div>
-            </form>
-          </div>
+            </div>
+
+            <button class="btn btn-primary w-100 rounded-pill py-3 fw-bold fs-6 mb-3" style="font-size:16px !important;">Reserve</button>
+            <p class="text-center mb-4" style="font-size:13px; color:var(--air-muted);">You won't be charged yet</p>
+
+            <div class="d-flex justify-content-between mb-2" style="font-size:15px;">
+              <span style="text-decoration:underline;">&#8377; <%= listing.price.toLocaleString('en-IN') %> × 2 nights</span>
+              <span>&#8377; <%= (listing.price * 2).toLocaleString('en-IN') %></span>
+            </div>
+            <div class="d-flex justify-content-between pb-4 mb-3" style="font-size:15px; border-bottom:1px solid var(--air-border);">
+              <span style="text-decoration:underline;">Cleaning fee</span>
+              <span>&#8377; 1,500</span>
+            </div>
+            <div class="d-flex justify-content-between fw-bold" style="font-size:16px;">
+              <span>Total before taxes</span>
+              <span>&#8377; <%= ((listing.price * 2) + 1500).toLocaleString('en-IN') %></span>
+            </div>
+          </form>
         </div>
       <% } else { %>
-        <div class="card shadow-lg border-0 rounded-4 sticky-top" style="top: 100px; padding: 24px;">
-          <h4 class="fw-bold mb-4">
-            &#8377; <%= listing.price.toLocaleString('en-IN') %> <span class="fs-6 fw-normal text-muted">night</span>
+        <div class="show-booking-card sticky-top" style="top: 100px;">
+          <h4 class="fw-bold mb-1">
+            &#8377; <%= listing.price.toLocaleString('en-IN') %> <span class="fs-6 fw-normal" style="color:var(--air-muted);">/ night</span>
           </h4>
-          <p class="text-muted mb-4">Log in to reserve this stunning property and check availability dates.</p>
-          <a href="/login" class="btn btn-primary w-100 rounded-pill py-3 fw-bold fs-5">Log in to book</a>
+          <div class="d-flex align-items-center gap-1 mb-4" style="font-size:13.5px; font-weight:600;">
+            <i class="fa-solid fa-star" style="font-size:11px;"></i> 4.9
+            <span style="color:var(--air-muted); font-weight:400;">· <%= listing.reviews.length %> reviews</span>
+          </div>
+          <p style="color:var(--air-muted); font-size:15px; margin-bottom:1.2rem;">Log in to reserve this stunning property and check availability dates.</p>
+          <a href="/login" class="btn btn-primary w-100 rounded-pill py-3 fw-bold" style="font-size:16px;">Log in to book</a>
         </div>
       <% } %>
     </div>

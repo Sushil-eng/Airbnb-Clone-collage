@@ -1,35 +1,14 @@
-.image-wrapper {
-  position: relative;
+/* favourites.css — extends style.css for the favourites page */
+
+.favourites-page h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  padding: 1.5rem 0 1rem;
 }
 
-.image-wrapper img {
-  width: 100%;
-  border-radius: 20px;
+/* Override image-wrapper for favourites page to use fixed height */
+.favourites-page .image-wrapper {
+  aspect-ratio: unset;
+  height: 220px;
 }
-
-.heart-icon {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 22px;
-  color: #ff385c;
-  background: white;
-  padding: 7px;
-  
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.heart-icon:hover {
-  transform: scale(1.1);
-}
-
-.heart-icon.active {
-  font-weight: 900;
-}
-
-.favourites-page .heart-icon {
-  display: none;
-}
-

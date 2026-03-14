@@ -1,13 +1,25 @@
 <% if (success && success.length) { %>
-  <div class="alert alert-success alert-dismissible fade show col-md-6 offset-3" role="alert">
-    <%= success %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <div class="flash-toast success" id="flash-success">
+    <i class="fa-solid fa-circle-check"></i>
+    <span><%= success %></span>
+    <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
+  <script>
+    setTimeout(() => { const el = document.getElementById('flash-success'); if(el) el.remove(); }, 4000);
+  </script>
 <% } %>
 
 <% if (error && error.length) { %>
-  <div class="alert alert-danger alert-dismissible col-6 offset-3  fade show" role="alert">
-    <%= error %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <div class="flash-toast error" id="flash-error">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <span><%= error %></span>
+    <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
+  <script>
+    setTimeout(() => { const el = document.getElementById('flash-error'); if(el) el.remove(); }, 5000);
+  </script>
 <% } %>

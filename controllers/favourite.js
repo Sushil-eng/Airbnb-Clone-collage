@@ -12,7 +12,7 @@ module.exports.addFavourite = (async (req, res) => {
   }
 
   req.flash("success", "Listing is added to favourites");
-  res.redirect(`/listings/${id}`);
+  res.redirect(`/listings/${listingId}`);
 });
 
 module.exports.show = (async (req, res) => {

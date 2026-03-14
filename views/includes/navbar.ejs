@@ -3,7 +3,7 @@
     <!-- Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="/listings">
       <i class="fa-solid fa-compass"></i>
-      <span class="fs-4 fw-bold text-danger d-none d-lg-block">wanderLust</span>
+      <span class="brand-name d-none d-lg-block">wanderLust</span>
     </a>
 
     <!-- Toggle Button -->
@@ -16,8 +16,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <div class="d-flex w-100 justify-content-between align-items-center flex-column flex-md-row mt-3 mt-md-0">
 
-        <!-- Left Links (Optional, keeping Explore for standard look) -->
-        <ul class="navbar-nav mb-2 mb-md-0">
+        <!-- Left (hidden on md+, keep for mobile) -->
+        <ul class="navbar-nav mb-2 mb-md-0 d-md-none">
           <li class="nav-item">
             <a class="nav-link" href="/listings">Explore</a>
           </li>
@@ -26,61 +26,69 @@
         <!-- Center Search Bar -->
         <div class="flex-grow-1 d-flex justify-content-center px-3 mb-3 mb-md-0 w-100">
           <form class="search-form" action="/listings" method="GET" role="search">
-            <input class="form-control search-input" type="search" name="q"
+            <input class="search-input" type="search" name="q"
               placeholder="Search destinations, title, location..." aria-label="Search"
               value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>" />
-            <button class="btn-search" type="submit">
+            <button class="btn-search" type="submit" aria-label="Search">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </form>
         </div>
 
         <!-- Right Links -->
-        <ul class="navbar-nav flex-row align-items-center gap-3">
-          <li class="nav-item">
-            <a class="nav-link fw-semibold text-nowrap" href="/listings/new">Airbnb home</a>
+        <ul class="navbar-nav flex-row align-items-center gap-2">
+          <li class="nav-item d-none d-md-block">
+            <a class="nav-link fw-semibold text-nowrap" href="/listings/new">
+              <i class="fa-solid fa-house-chimney me-1"></i> Airbnb home
+            </a>
           </li>
           <% if(!currUser) { %>
             <li class="nav-item">
-              <a class="nav-link fw-bold text-nowrap" href="/signup">Sign up</a>
+              <a class="nav-link fw-semibold text-nowrap" href="/signup">Sign up</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bold text-nowrap" href="/login">Log in</a>
+              <a class="nav-link fw-semibold text-nowrap" href="/login">Log in</a>
             </li>
-            <% } else { %>
+          <% } else { %>
+            <li class="nav-item">
               <div class="dropdown">
-                <button class="btn btn-light rounded-pill border py-2 px-3 d-flex align-items-center gap-2 shadow-sm"
-                  type="button" data-bs-toggle="dropdown" aria-expanded="false" style="transition: box-shadow 0.2s;">
-                  <i class="fa-solid fa-bars"></i>
+                <button class="user-menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa-solid fa-bars" style="color: var(--air-muted); font-size: 15px;"></i>
                   <% if(currUser.avatar && currUser.avatar.url) { %>
-                    <img src="<%= currUser.avatar.url %>" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;" alt="Profile Picture">
+                    <img src="<%= currUser.avatar.url %>" class="user-avatar" alt="Profile">
                   <% } else { %>
-                    <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white"
-                      style="width: 30px; height: 30px;">
-                      <i class="fa-solid fa-user"></i>
+                    <div class="user-avatar">
+                      <i class="fa-solid fa-user" style="font-size:13px;"></i>
                     </div>
                   <% } %>
                 </button>
 
-                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2 rounded-4 py-2">
-                  <li><a class="dropdown-item fw-semibold" href="/profile/show">Profile</a></li>
-                  <li><a class="dropdown-item" href="/favourite/show">Favourites</a></li>
-                  <li><a class="dropdown-item" href="/booking/show">Trips</a></li>
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2">
                   <li>
-                    <hr class="dropdown-divider">
+                    <div class="px-4 py-2 border-bottom mb-1">
+                      <div style="font-size:13px; font-weight:700; color:var(--air-dark);">
+                        <%= currUser.firstName %> <%= currUser.lastName %>
+                      </div>
+                      <div style="font-size:12px; color:var(--air-muted);"><%= currUser.email %></div>
+                    </div>
                   </li>
-                  <li><a class="dropdown-item" href="/listings/new">Airbnb your home</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
+                  <li><a class="dropdown-item fw-semibold" href="/profile/show"><i class="fa-regular fa-user me-2"></i>Profile</a></li>
+                  <li><a class="dropdown-item" href="/favourite/show"><i class="fa-regular fa-heart me-2"></i>Wishlists</a></li>
+                  <li><a class="dropdown-item" href="/booking/show"><i class="fa-regular fa-suitcase me-2"></i>Trips</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/listings/new"><i class="fa-solid fa-house-chimney me-2"></i>Airbnb your home</a></li>
+                  <li><hr class="dropdown-divider"></li>
                   <li>
                     <form action="/logout" method="get" class="m-0 p-0">
-                      <button class="dropdown-item text-danger fw-semibold">Log out</button>
+                      <button class="dropdown-item text-danger fw-semibold">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Log out
+                      </button>
                     </form>
                   </li>
                 </ul>
               </div>
-              <% } %>
+            </li>
+          <% } %>
         </ul>
 
       </div>
