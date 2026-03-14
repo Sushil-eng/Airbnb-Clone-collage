@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const helmet = require("helmet");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
@@ -31,6 +32,7 @@ app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({extended: true}));
 app.engine("ejs", ejsMate);
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.static(path.join(__dirname, "/public")));
 
 // const dbUrl = process.env.ATLASDB_URI;
